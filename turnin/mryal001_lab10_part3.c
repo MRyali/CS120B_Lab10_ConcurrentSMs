@@ -16,7 +16,7 @@
 
 enum States_1 {Start_1, light1, light2, light3} state1; //ThreeLEDsSM
 enum States_2 {Start_2, on, off} state2; //BlinkingLEDSM
-enum States+3 {Start_3, on1, off1} state3; //SpeakerSM
+enum States_3 {Start_3, on1, off1} state3; //SpeakerSM
 //enum States_3 {Start_3, combine} state3; //CombineLEDsSM
 
 unsigned char threeLEDs; //temp for sequential lighting value
@@ -154,6 +154,7 @@ void SpeakerSM() {
 }
 
 int main(void) {
+    DDRA = 0x00; PORTA = 0xFF; //input
     DDRB = 0xFF; PORTB = 0x00; //output
 
     unsigned long ThreeLED_Timer = 300; //300ms
@@ -169,6 +170,7 @@ int main(void) {
     state3 = Start_3;
 
     while (1) {
+        switchA2 = ~PINA & 0x02; //button on PA2
         if (ThreeLED_Timer >= 300) { //every 300ms run ThreeLED
             ThreeLEDsSM();
             ThreeLED_Timer = 0; //reset
@@ -177,7 +179,6 @@ int main(void) {
             BlinkingLEDSM();
             BlinkLED_Timer = 0; //reset
         }
-
         if (BlinkLED_Timer >= 2) { //every 1000ms run BlinkLED
             SpeakerSM();
             Speaker_Timer = 0; //reset
