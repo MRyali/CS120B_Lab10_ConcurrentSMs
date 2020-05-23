@@ -133,9 +133,9 @@ void SpeakerSM() {
                 state3 = off1;
             }
             break;
-        case ON3:
+        case on1:
             if (count < 2 && switchA2) { //stay on for 2ms
-                state3 = ON3;
+                state3 = on1;
             }
             else {
                 count++; //increment the count
