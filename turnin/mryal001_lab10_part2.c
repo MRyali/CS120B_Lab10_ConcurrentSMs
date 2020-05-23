@@ -102,7 +102,7 @@ void CombineLEDsSM() { //combine LED values into PORTB
 		case Start_3:
 			break;
 		case combine:
-			PORTB = threeLEDs | blinkingLED;
+			PORTB = blinkingLED | threeLEDs;
 			break;
 		default:
 			break;
@@ -118,7 +118,7 @@ int main(void) {
 
     TimerSet(period); //set timer here
     TimerOn();
-    
+
     state1 = Start_1; //start state
     state2 = Start_2;
 
