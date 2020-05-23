@@ -36,7 +36,7 @@ void ThreeLEDsSM() {
 			state1 = light1;
 			break;
 		default:
-			state = Start_1;
+			state1 = Start_1;
 			break;
 	}
 	switch (state1) {

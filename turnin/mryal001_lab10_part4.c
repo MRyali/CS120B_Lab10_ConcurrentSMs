@@ -46,7 +46,7 @@ void ThreeLEDsSM() {
 			state1 = light1;
 			break;
 		default:
-			state = Start_1;
+			state1 = Start_1;
 			break;
 	}
 	switch (state1) {
@@ -155,9 +155,9 @@ void SpeakerSM() {
         case on1:
             PORTB = notes[i] | blinkingLED | threeLEDs;  //turn on PB4 while keeping LED functionality
             break;
-        }
         default:
             break;
+    }
 }
 
 void FrequencySM() {
