@@ -39,7 +39,7 @@ void ThreeLEDsSM() {
 			state1 = light1;
 			break;
 		default:
-			state = Start_1;
+			state1 = Start_1;
 			break;
 	}
 	switch (state1) {
@@ -126,9 +126,9 @@ void SpeakerSM() {
                 state3 = off1;
             }
             break;
-        case ON3:
+        case on1:
             if (count < 2 && switchA2) { //stay on for 2ms
-                state3 = ON3;
+                state3 = on1;
             }
             else {
                 count++; //increment the count
@@ -148,9 +148,9 @@ void SpeakerSM() {
         case on1:
             PORTB = 0x10 | blinkingLED | threeLEDs;  //turn on PB4 while keeping LED functionality
             break;
-        }
         default:
             break;
+	}
 }
 
 int main(void) {
@@ -170,7 +170,7 @@ int main(void) {
     state3 = Start_3;
 
     while (1) {
-        switchA2 = ~PINA & 0x02; //button on PA2
+        switchA2 = ~PINA & 0x04; //button on PA2
         if (ThreeLED_Timer >= 300) { //every 300ms run ThreeLED
             ThreeLEDsSM();
             ThreeLED_Timer = 0; //reset
