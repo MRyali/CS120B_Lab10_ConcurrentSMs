@@ -213,7 +213,7 @@ void FrequencySM() {
 void CombineLEDsSM() { //combine LED values into PORTB
 	switch(state5) {
 		case Start_5:
-			state3 = combine;
+			state5 = combine;
 			break;
 		case combine:
 			state5 = combine;
