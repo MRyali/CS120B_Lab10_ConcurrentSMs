@@ -21,7 +21,7 @@ enum States_4 {Start_4, combine} state4; //CombineLEDsSM
 
 unsigned char threeLEDs; //temp for sequential lighting value
 unsigned char blinkingLED; //temp for blinking lighting value
-unsigned char count = 0;
+//unsigned char count = 0;
 unsigned char speakerVal = 0;
 unsigned char switchA2;
 
@@ -120,7 +120,7 @@ void SpeakerSM() {
             state3 = off1; //start powered off
             break;
         case off1:
-            count = 0;
+            //count = 0;
             if (switchA2) { //if switch is on
                 state3 = on1;
             }
@@ -129,11 +129,11 @@ void SpeakerSM() {
             }
             break;
         case on1:
-            if (count < 2 && switchA2) { //stay on for 2ms
+            if (switchA2) { //stay on for 2ms
                 state3 = on1;
             }
             else {
-                count++; //increment the count
+                //count++; //increment the count
                 state3 = off1;
             }
             break;
