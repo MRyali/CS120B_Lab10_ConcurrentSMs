@@ -90,6 +90,50 @@ void BlinkingLEDSM() { //blink PB3
 	}
 }
 
+void SpeakerSM() {
+    switch(state3) {
+        case Start_3:
+            state3 = off1; //start powered off
+            break;
+        case off1:
+            //count = 0;
+            if (switchA2) { //if switch is on
+                state3 = on1;
+            }
+            else { //otherwise stat off
+                state3 = off1;
+            }
+            break;
+        case on1:
+        /*
+            if (switchA2) { //stay on for 2ms
+                state3 = on1;
+            }
+            else {
+                //count++; //increment the count
+                state3 = off1;
+            }
+            */
+            state3 = off1;
+            break;
+        default:
+            state3 = Start_3;
+            break;
+    }
+    switch(state3) {
+        case Start_3:
+            break;
+        case off1:
+            speakerVal = 0x00; //turn off PB4 while keeping LED functionality
+            break;
+        case on1:
+            speakerVal = 0x10; //turn on PB4 while keeping LED functionality
+            break;
+        default:
+            break;
+	}
+}
+
 void CombineLEDsSM() { //combine LED values into PORTB
 	switch(state4) {
 		case Start_4:
@@ -111,47 +155,6 @@ void CombineLEDsSM() { //combine LED values into PORTB
 			break;
 		default:
 			break;
-	}
-}
-
-void SpeakerSM() {
-    switch(state3) {
-        case Start_3:
-            state3 = off1; //start powered off
-            break;
-        case off1:
-            //count = 0;
-            if (switchA2) { //if switch is on
-                state3 = on1;
-            }
-            else { //otherwise stat off
-                state3 = off1;
-            }
-            break;
-        case on1:
-            if (switchA2) { //stay on for 2ms
-                state3 = on1;
-            }
-            else {
-                //count++; //increment the count
-                state3 = off1;
-            }
-            break;
-        default:
-            state3 = Start_3;
-            break;
-    }
-    switch(state3) {
-        case Start_3:
-            break;
-        case off1:
-            speakerVal = 0x00; //turn off PB4 while keeping LED functionality
-            break;
-        case on1:
-            speakerVal = 0x10; //turn on PB4 while keeping LED functionality
-            break;
-        default:
-            break;
 	}
 }
 
