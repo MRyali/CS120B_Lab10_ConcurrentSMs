@@ -105,15 +105,15 @@ void SpeakerSM() {
             }
             break;
         case on1:
-        /*
-            if (switchA2) { //stay on for 2ms
-                state3 = on1;
+	    /*
+            if (!switchA2) { //stay on for 2ms
+                state3 = off1;
             }
             else {
                 //count++; //increment the count
-                state3 = off1;
+                state3 = on1;
             }
-            */
+	    */
             state3 = off1;
             break;
         default:
