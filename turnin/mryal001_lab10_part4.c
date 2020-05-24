@@ -22,10 +22,10 @@ enum States_5 {Start_3, combine} state5; //CombineLEDsSM
 
 unsigned char threeLEDs; //temp for sequential lighting value
 unsigned char blinkingLED; //temp for blinking lighting value
-unsigned char count = 0;
 unsigned char speakerVal = 0;
-unsigned char switchA2; //PA2
+unsigned char frequencyPeriod = 1;
 
+unsigned char switchA2; //PA2
 unsigned char incButton; //PA0
 unsigned char decButton; //PA1
 
@@ -127,7 +127,6 @@ void SpeakerSM() {
             state3 = off1; //start powered off
             break;
         case off1:
-            count = 0;
             if (switchA2) { //if switch is on
                 state3 = on1;
             }
@@ -136,13 +135,14 @@ void SpeakerSM() {
             }
             break;
         case on1:
-            if (count < 2 && switchA2) { //stay on for 2ms
-                state3 = on1;
+            /*if (!switchA2) { //stay on for 2ms
+                state3 = off1;
             }
             else {
                 count++; //increment the count
-                state3 = off1;
-            }
+                state3 = on1;
+            }*/
+            state3 = off1;
             break;
         default:
             state3 = Start_3;
@@ -210,15 +210,21 @@ void FrequencySM() {
         case wait:
             break;
         case inc:
-            if (i < 7) {
+            /*if (i < 7) {
                 i++;
+            }*/
+            if (frequencyPeriod <= 100) {
+                frequencyPeriod += 10;
             }
             break;
         case incRelease:
             break;
         case dec:
-            if (i > 0) {
+            /*if (i > 0) {
                 i--;
+            }*/
+            if (frequencyPeriod > 10) {
+                frequencyPeriod -= 10;
             }
             break;
         case decRelease:
@@ -249,7 +255,8 @@ int main(void) {
     while (1) {
         switchA2 = ~PINA & 0x02; //button on PA2
         incButton = ~PINA & 0x00; //button on PA0
-        decButton = ~PINA & 0x01; //button on PA!
+        decButton = ~PINA & 0x01; //button on PA1
+
         if (ThreeLED_Timer >= 300) { //every 300ms run ThreeLED
             ThreeLEDsSM();
             ThreeLED_Timer = 0; //reset
@@ -258,12 +265,12 @@ int main(void) {
             BlinkingLEDSM();
             BlinkLED_Timer = 0; //reset
         }
-        if (BlinkLED_Timer >= 2) { //every 1000ms run BlinkLED
+        if (Speaker_Timer >= frequencyPeriod) { //every 1000ms run BlinkLED
+            FrequencySM();
             SpeakerSM();
             Speaker_Timer = 0; //reset
         }
 
-        FrequencySM();
         CombineLEDsSM();
 
         while (!TimerFlag) {}
