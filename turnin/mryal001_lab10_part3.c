@@ -106,7 +106,8 @@ void CombineLEDsSM() { //combine LED values into PORTB
 		case Start_4:
 			break;
 		case combine:
-			PORTB = speakerVal | blinkingLED | threeLEDs;
+			//PORTB = speakerVal | blinkingLED | threeLEDs;
+            PORTB = threeLEDs | blinkingLED | speakerVal;
 			break;
 		default:
 			break;
