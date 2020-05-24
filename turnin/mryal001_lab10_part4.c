@@ -97,30 +97,6 @@ void BlinkingLEDSM() { //blink PB3
 	}
 }
 
-void CombineLEDsSM() { //combine LED values into PORTB
-	switch(state3) {
-		case Start_3:
-			state3 = combine;
-			break;
-		case combine:
-			state3 = combine;
-			break;
-		default:
-			state3 = Start_3;
-			break;
-	}
-	switch(state3) {
-		case Start_3:
-			break;
-		case combine:
-            //set_PWM(notes[i]);
-			PORTB = speakerVal | blinkingLED | threeLEDs;
-			break;
-		default:
-			break;
-	}
-}
-
 void SpeakerSM() {
     switch(state3) {
         case Start_3:
@@ -234,6 +210,30 @@ void FrequencySM() {
     }
 }
 
+void CombineLEDsSM() { //combine LED values into PORTB
+	switch(state5) {
+		case Start_5:
+			state3 = combine;
+			break;
+		case combine:
+			state5 = combine;
+			break;
+		default:
+			state5 = Start_5;
+			break;
+	}
+	switch(state5) {
+		case Start_5:
+			break;
+		case combine:
+            //set_PWM(notes[i]);
+			PORTB = speakerVal | blinkingLED | threeLEDs;
+			break;
+		default:
+			break;
+	}
+}
+
 int main(void) {
     DDRA = 0x00; PORTA = 0xFF; //input
     DDRB = 0xFF; PORTB = 0x00; //output
@@ -243,7 +243,7 @@ int main(void) {
     unsigned long Speaker_Timer = 2; //2ms
     unsigned long period = 1; //1ms => GCD of the other three periods
     frequencyPeriod = 1;
-    
+
     TimerSet(period); //set timer here
     TimerOn();
 
