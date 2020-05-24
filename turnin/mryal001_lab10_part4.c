@@ -18,7 +18,7 @@ enum States_1 {Start_1, light1, light2, light3} state1; //ThreeLEDsSM
 enum States_2 {Start_2, on, off} state2; //BlinkingLEDSM
 enum States_3 {Start_3, on1, off1} state3; //SpeakerSM
 enum States_4 {Start_4, wait, inc, incRelease, dec, decRelease} state4; //FrequencySM
-enum States_5 {Start_3, combine} state5; //CombineLEDsSM
+enum States_5 {Start_5, combine} state5; //CombineLEDsSM
 
 unsigned char threeLEDs; //temp for sequential lighting value
 unsigned char blinkingLED; //temp for blinking lighting value
@@ -242,7 +242,8 @@ int main(void) {
     unsigned long BlinkLED_Timer = 1000; //1000ms
     unsigned long Speaker_Timer = 2; //2ms
     unsigned long period = 1; //1ms => GCD of the other three periods
-
+    frequencyPeriod = 1;
+    
     TimerSet(period); //set timer here
     TimerOn();
 
@@ -266,11 +267,11 @@ int main(void) {
             BlinkLED_Timer = 0; //reset
         }
         if (Speaker_Timer >= frequencyPeriod) { //every 1000ms run BlinkLED
-            FrequencySM();
             SpeakerSM();
             Speaker_Timer = 0; //reset
         }
 
+        FrequencySM();
         CombineLEDsSM();
 
         while (!TimerFlag) {}
