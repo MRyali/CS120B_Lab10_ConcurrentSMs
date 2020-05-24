@@ -189,7 +189,7 @@ void FrequencySM() {
             /*if (i < 7) {
                 i++;
             }*/
-            if (frequencyPeriod <= 1000) {
+            if (frequencyPeriod <= 600) {
                 frequencyPeriod += 50;
             }
             break;
@@ -199,7 +199,7 @@ void FrequencySM() {
             /*if (i > 0) {
                 i--;
             }*/
-            if (frequencyPeriod > 10) {
+            if (frequencyPeriod > 50) {
                 frequencyPeriod -= 50;
             }
             break;
