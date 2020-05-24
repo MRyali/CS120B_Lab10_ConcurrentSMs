@@ -189,8 +189,8 @@ void FrequencySM() {
             /*if (i < 7) {
                 i++;
             }*/
-            if (frequencyPeriod <= 600) {
-                frequencyPeriod += 50;
+            if (frequencyPeriod <= 10) {
+                frequencyPeriod += 1;
             }
             break;
         case incRelease:
@@ -199,8 +199,8 @@ void FrequencySM() {
             /*if (i > 0) {
                 i--;
             }*/
-            if (frequencyPeriod > 50) {
-                frequencyPeriod -= 50;
+            if (frequencyPeriod > 2) {
+                frequencyPeriod -= 1;
             }
             break;
         case decRelease:
@@ -242,7 +242,7 @@ int main(void) {
     unsigned long BlinkLED_Timer = 1000; //1000ms
     unsigned long Speaker_Timer = 2; //2ms
     unsigned long period = 1; //1ms => GCD of the other three periods
-    frequencyPeriod = 300;
+    frequencyPeriod = 1;
 
     TimerSet(period); //set timer here
     TimerOn();
