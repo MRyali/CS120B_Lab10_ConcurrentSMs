@@ -182,7 +182,7 @@ int main(void) {
             BlinkingLEDSM();
             BlinkLED_Timer = 0; //reset
         }
-        if (SpeakerTimer >= 2) { //every 1000ms run BlinkLED
+        if (Speaker_Timer >= 2) { //every 1000ms run BlinkLED
             SpeakerSM();
             Speaker_Timer = 0; //reset
         }

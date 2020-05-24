@@ -18,11 +18,12 @@ enum States_1 {Start_1, light1, light2, light3} state1; //ThreeLEDsSM
 enum States_2 {Start_2, on, off} state2; //BlinkingLEDSM
 enum States_3 {Start_3, on1, off1} state3; //SpeakerSM
 enum States_4 {Start_4, wait, inc, incRelease, dec, decRelease} state4; //FrequencySM
-//enum States_3 {Start_3, combine} state3; //CombineLEDsSM
+enum States_5 {Start_3, combine} state5; //CombineLEDsSM
 
 unsigned char threeLEDs; //temp for sequential lighting value
 unsigned char blinkingLED; //temp for blinking lighting value
 unsigned char count = 0;
+unsigned char speakerVal = 0;
 unsigned char switchA2; //PA2
 
 unsigned char incButton; //PA0
@@ -95,7 +96,7 @@ void BlinkingLEDSM() { //blink PB3
 			break;
 	}
 }
-/*
+
 void CombineLEDsSM() { //combine LED values into PORTB
 	switch(state3) {
 		case Start_3:
@@ -112,13 +113,14 @@ void CombineLEDsSM() { //combine LED values into PORTB
 		case Start_3:
 			break;
 		case combine:
-			PORTB = blinkingLED | threeLEDs;
+            //set_PWM(notes[i]);
+			PORTB = speakerVal | blinkingLED | threeLEDs;
 			break;
 		default:
 			break;
 	}
 }
-*/
+
 void SpeakerSM() {
     switch(state3) {
         case Start_3:
@@ -150,10 +152,10 @@ void SpeakerSM() {
         case Start_3:
             break;
         case off1:
-            PORTB = 0x00 | blinkingLED | threeLEDs; //turn off PB4 while keeping LED functionality
+            speakerVal = 0x00; //turn off PB4 while keeping LED functionality
             break;
         case on1:
-            PORTB = notes[i] | blinkingLED | threeLEDs;  //turn on PB4 while keeping LED functionality
+            speakerVal = 0x10;  //turn on PB4 while keeping LED functionality
             break;
         default:
             break;
@@ -241,7 +243,8 @@ int main(void) {
     state1 = Start_1; //start state
     state2 = Start_2;
     state3 = Start_3;
-    state4 = start_4;
+    state4 = Start_4;
+    state5 = Start_5;
 
     while (1) {
         switchA2 = ~PINA & 0x02; //button on PA2
@@ -261,6 +264,7 @@ int main(void) {
         }
 
         FrequencySM();
+        CombineLEDsSM();
 
         while (!TimerFlag) {}
         TimerFlag = 0;
