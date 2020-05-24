@@ -1,5 +1,5 @@
-/*	Author: lab
- *  Partner(s) Name: Mayur Ryali
+/*	Author:  Mayur Ryali
+ *  Partner(s) Name:
  *	Lab Section: 21
  *	Assignment: Lab #10  Exercise #1
  *	Exercise Description: [optional - include for your own benefit]
